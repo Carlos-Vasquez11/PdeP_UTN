@@ -39,7 +39,7 @@ versionBarata = reverse.descodiciarProducto
 
 
 productoDeLujo :: String -> Bool
-productoDeLujo nombreProducto =  head nombreProducto `elem` ['x','z','X','Z']
+productoDeLujo nombreProducto =  'x' `elem` nombreProducto || 'z' `elem` nombreProducto
 
 productoCodiciado :: String -> Bool
 productoCodiciado nombreProducto = length nombreProducto > 10
@@ -65,7 +65,6 @@ aplicarCostoDeEnvio precio costoEnvio = precio + costoEnvio
 multiplicarCantidad :: Num a => a -> a -> a
 multiplicarCantidad valor cantidad = valor * cantidad
 
---Para hacer la composición debemos descomponer el código en funciones mas pequeñas
 precioTotal :: Fractional a => a -> a -> a -> a -> a
 precioTotal precioUnitario cantidad descuento costoEnvio = (aplicarCostoDeEnvio costoEnvio).(multiplicarCantidad cantidad).(aplicarDescuento precioUnitario) $ descuento
 --precioTotal precioUnitario cantidad descuento costoEnvio = aplicarCostoDeEnvio ((aplicarDescuento precioUnitario descuento) * cantidad) costoEnvio
