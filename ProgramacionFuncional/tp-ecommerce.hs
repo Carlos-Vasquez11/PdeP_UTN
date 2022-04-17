@@ -15,7 +15,6 @@
 --reverse :: String -> String
 --reverse :: forall a. [a] -> [a]
 
-
 --Desarrollo
 --Aquí estoy muteando las sugerencias para que no me moleste VSCode
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
@@ -65,7 +64,5 @@ aplicarCostoDeEnvio precio costoEnvio = precio + costoEnvio
 multiplicarCantidad :: Num a => a -> a -> a
 multiplicarCantidad valor cantidad = valor * cantidad
 
-precioTotal :: Fractional a => a -> a -> a -> a -> a
-precioTotal precioUnitario cantidad descuento costoEnvio = (aplicarCostoDeEnvio costoEnvio).(multiplicarCantidad cantidad).(aplicarDescuento precioUnitario) $ descuento
---precioTotal precioUnitario cantidad descuento costoEnvio = aplicarCostoDeEnvio ((aplicarDescuento precioUnitario descuento) * cantidad) costoEnvio
---Nota:" (aplicarDescuento precioUnitario descuento) * cantidad ".No necesita parentesis, pero considero que esto ayuda a leer un poco mejor el código
+precioTotal :: Fractional a => (String,a) -> a -> a -> a -> a
+precioTotal (nombre, precioUnitario) cantidad descuento costoEnvio = (aplicarCostoDeEnvio costoEnvio).(multiplicarCantidad cantidad).(aplicarDescuento precioUnitario) $ descuento
