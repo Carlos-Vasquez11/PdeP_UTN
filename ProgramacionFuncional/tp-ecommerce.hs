@@ -22,18 +22,25 @@
 {-# HLINT ignore "Redundant bracket" #-}
 {-# HLINT ignore "Use infix" #-}
 
---Nota: podemos quitar la etiqueta "dia" y la función seguiría funcionando, pero considero que es poco expresivo.
+data Producto = UnProducto {
+    nombreDelProducto :: String,
+    precioDelProducto :: Int    
+} deriving (Eq, Show)
+
+remera :: Producto
+remera = UnProducto "Remera" 2000
+
 entregaSencilla :: String -> Bool
-entregaSencilla dia = even.length $ dia
+entregaSencilla = even.length
 
-productoXL :: String -> String
-productoXL nombreProducto = nombreProducto ++ " XL"
+productoXL :: Producto -> String
+productoXL (UnProducto nombreProducto _) = nombreProducto ++ " XL"
 
 
-descodiciarProducto :: String -> String
-descodiciarProducto nombreProducto = take 10 nombreProducto 
+descodiciarProducto :: Producto -> String
+descodiciarProducto (UnProducto nombreProducto _) = take 10 nombreProducto 
 
-versionBarata :: String -> String
+versionBarata :: Producto -> String
 versionBarata = reverse.descodiciarProducto
 
 
@@ -41,17 +48,17 @@ productoDeLujo :: String -> Bool
 productoDeLujo nombreProducto =  'x' `elem` nombreProducto || 'z' `elem` nombreProducto
 
 productoCodiciado :: String -> Bool
-productoCodiciado nombreProducto = length nombreProducto > 10
+productoCodiciado  = (>10).length
 
 esVocal :: Char -> Bool
 esVocal caracter = elem caracter ['a','e','i','o','u','A','E','I','O','U']
 
 productoCorriente :: String -> Bool
-productoCorriente nombreProducto = esVocal.head $ nombreProducto
+productoCorriente = esVocal.head
 
 
-productoDeElite :: String -> Bool
-productoDeElite nombreProducto = productoDeLujo nombreProducto && productoCodiciado nombreProducto && not (productoCorriente nombreProducto)
+productoDeElite :: Producto -> Bool
+productoDeElite (UnProducto nombreProducto _) = productoDeLujo nombreProducto && productoCodiciado nombreProducto && not (productoCorriente nombreProducto)
 
 
 aplicarDescuento :: Fractional a => a -> a -> a
@@ -65,4 +72,4 @@ multiplicarCantidad :: Num a => a -> a -> a
 multiplicarCantidad valor cantidad = valor * cantidad
 
 precioTotal :: Fractional a => (String,a) -> a -> a -> a -> a
-precioTotal (nombre, precioUnitario) cantidad descuento costoEnvio = (aplicarCostoDeEnvio costoEnvio).(multiplicarCantidad cantidad).(aplicarDescuento precioUnitario) $ descuento
+precioTotal (_, precioUnitario) cantidad descuento costoEnvio = (aplicarCostoDeEnvio costoEnvio).(multiplicarCantidad cantidad).(aplicarDescuento precioUnitario) $ descuento

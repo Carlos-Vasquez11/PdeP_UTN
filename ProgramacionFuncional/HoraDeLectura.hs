@@ -49,7 +49,7 @@ totalDePaginas :: Biblioteca -> Int
 totalDePaginas miBiblioteca = sum.(map cantidadDePaginas) $ miBiblioteca
 
 promedioDePaginas :: Biblioteca -> Int
-promedioDePaginas biblioteca = div (totalDePaginas biblioteca) (length biblioteca)
+promedioDePaginas miBiblioteca = div (totalDePaginas miBiblioteca) (length miBiblioteca)
 
 
 devolverAutor :: (a,String,b) -> String
